@@ -11,5 +11,7 @@ clf = SVR(C=1000)
 clf.fit(X, y)
 
 Xt = test[features]
-print(clf.predict(Xt)[:5])
-print(y[:5])
+predicted = pd.DataFrame(clf.predict(Xt), columns=['SalePrice'])
+
+output = pd.concat([test['Id'], predicted], axis=1)
+output.to_csv(r'C:\Users\lpfjustino\Desktop\output.csv', index=None, header=True)
