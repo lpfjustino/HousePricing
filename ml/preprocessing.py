@@ -1,6 +1,6 @@
 from sklearn.impute import SimpleImputer
 from eda.stats import features_missing_too_many
-from index import *
+from resources import *
 
 # Dropping features with too many missing values
 data.drop(features_missing_too_many, axis=1, inplace=True)

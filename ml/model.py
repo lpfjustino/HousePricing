@@ -1,5 +1,5 @@
 from sklearn.svm import SVR
-from index import *
+from resources import *
 
 def model_v1():
     features = ['OverallQual']

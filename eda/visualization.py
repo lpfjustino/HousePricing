@@ -1,6 +1,6 @@
 import seaborn as sns
 import matplotlib.pyplot as plt
-from index import *
+from resources import *
 
 def plot_sale_price_histogram():
     sns.distplot(train['SalePrice'])
@@ -14,7 +14,7 @@ def plot_scatter_plots_for_vars(vars):
 
 def boxplot_overall_quality():
     data = pd.concat([train['SalePrice'], train['OverallQual']], axis=1)
-    f, ax = plt.subplots(figsize=(8, 6))
+    _, _ = plt.subplots(figsize=(8, 6))
     fig = sns.boxplot(x='OverallQual', y='SalePrice', data=data)
     fig.axis(ymin=0, ymax=800000)
     plt.show()
