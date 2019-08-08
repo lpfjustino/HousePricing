@@ -2,7 +2,7 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-df_train = pd.read_csv('input/train.csv')
+df_train = pd.read_csv('../input/train.csv')
 
 def plot_sale_price_histogram():
     sns.distplot(df_train['SalePrice'])
@@ -30,7 +30,7 @@ def boxplot_year_built():
     plt.xticks(rotation=90);
     plt.show()
 
-plot_sale_price_histogram()
-plot_scatter_plots_for_vars(['GrLivArea', 'TotalBsmtSF'])
-boxplot_overall_quality()
-boxplot_year_built()
+# plot_sale_price_histogram()
+# plot_scatter_plots_for_vars(['GrLivArea', 'TotalBsmtSF'])
+# boxplot_overall_quality()
+# boxplot_year_built()
