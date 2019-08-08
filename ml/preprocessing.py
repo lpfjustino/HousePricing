@@ -3,10 +3,15 @@ from eda.stats import features_missing_too_many
 from resources import *
 
 def preprocess():
+    drop_ids()
     drop_missing()
     fill_missing_numeric()
     fill_missing_cathegoric()
     fill_remaining()
+
+
+def drop_ids():
+    train.drop("Id", axis=1, inplace=True)
 
 
 def fill_remaining():
