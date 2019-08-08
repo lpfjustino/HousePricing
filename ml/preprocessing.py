@@ -1,11 +1,6 @@
 from sklearn.impute import SimpleImputer
-import pandas as pd
-import numpy as np
 from eda.stats import features_missing_too_many
-
-train = pd.read_csv('../input/train.csv')
-test = pd.read_csv('../input/test.csv')
-data = pd.concat([train.iloc[:, :-1], test], axis=0)
+from index import *
 
 # Dropping features with too many missing values
 data.drop(features_missing_too_many, axis=1, inplace=True)
