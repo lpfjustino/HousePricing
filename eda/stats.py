@@ -1,6 +1,5 @@
 import pandas as pd
-
-train = pd.read_csv('../input/train.csv')
+from resources import *
 
 # print("Skewness: %f" % train['SalePrice'].skew())
 # print("Kurtosis: %f" % train['SalePrice'].kurt())
