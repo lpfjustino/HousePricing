@@ -1,6 +1,6 @@
 from sklearn.svm import SVR
 from resources import *
-from ml.preprocessing import preprocess
+from ml.preprocessing import preprocess, preprocess_v2
 
 from sklearn.model_selection import GridSearchCV
 
@@ -57,6 +57,25 @@ def model_v2_1():
 
 def model_v2_2():
     data = preprocess()
+    train_n_rows = train.shape[0]
+    train_df = data.iloc[:train_n_rows, 1:]
+    test_data = data.iloc[train_n_rows:, 1:]
+
+    # Reattaching the target variable
+    train_data = pd.concat([train_df, train.iloc[:, -1]], axis=1)
+
+    X = train_data.iloc[:, :-1]
+    y = train_data.iloc[:, -1]
+
+    reg = SVR(C=0.175, cache_size=200, coef0=0.0, degree=2, epsilon=0.1, gamma='auto', kernel='poly', max_iter=-1,
+              shrinking=True, tol=0.001, verbose=False)
+    reg.fit(X, y)
+    predicted = pd.DataFrame(reg.predict(test_data), columns=['SalePrice'])
+
+    return predicted
+
+def model_v2_3():
+    data = preprocess_v2()
     train_n_rows = train.shape[0]
     train_df = data.iloc[:train_n_rows, 1:]
     test_data = data.iloc[train_n_rows:, 1:]

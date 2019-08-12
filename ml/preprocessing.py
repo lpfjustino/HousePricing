@@ -6,11 +6,25 @@ from scipy.stats import skew
 
 def preprocess():
     drop_ids()
-    # drop_missing()
+    drop_missing()
     drop_missing_v2()
-    # fill_missing_numeric()
-    # fill_missing_cathegoric()
-    # fill_remaining()
+    fill_missing_numeric()
+    fill_missing_cathegoric()
+    fill_remaining()
+    stringify_meaningless_as_numeric()
+
+    dummies = get_dummies()
+    transformed_data = log_transform_skewed_data()
+    final_data = pd.concat([dummies, transformed_data], axis=1)
+    scaler = MinMaxScaler(copy=False)
+    scaler.fit(final_data)
+    scaler.transform(final_data)
+
+    return final_data
+
+def preprocess_v2():
+    drop_ids()
+    drop_missing_v2()
     stringify_meaningless_as_numeric()
 
     dummies = get_dummies()
