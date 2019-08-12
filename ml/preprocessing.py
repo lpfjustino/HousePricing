@@ -36,6 +36,26 @@ def preprocess_v2():
 
     return final_data
 
+def preprocess_v2_1():
+    drop_ids()
+    outliers = [30, 88, 462, 631, 1322]
+    drop_outliers(outliers)
+    drop_missing_v2()
+    stringify_meaningless_as_numeric()
+
+    dummies = get_dummies()
+    transformed_data = log_transform_skewed_data()
+    final_data = pd.concat([dummies, transformed_data], axis=1)
+    scaler = MinMaxScaler(copy=False)
+    scaler.fit(final_data)
+    scaler.transform(final_data)
+
+    return final_data
+
+
+def drop_outliers(outliers):
+    train.drop(train.index[outliers], inplace=True)
+
 
 def log_transform_skewed_data():
     categoric_variables = get_categoric_variables(data)
