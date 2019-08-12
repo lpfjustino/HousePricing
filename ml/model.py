@@ -27,8 +27,8 @@ def model_v2():
     X = train_data.iloc[:, :-1]
     y = train_data.iloc[:, -1]
 
-    parameters = {'kernel': ('linear', 'rbf', 'poly'), 'C': [0.01, 0.1, 0.5, 2, 10], 'degree': [2, 3]}
-    svr = SVR(gamma='auto', max_iter=100000)
+    parameters = {'kernel': ('linear', 'rbf', 'poly'), 'C': [0.01, 0.1, 0.2, 2], 'degree': [2, 3]}
+    svr = SVR(gamma='auto', max_iter=1000000)
     reg = GridSearchCV(svr, parameters, cv=5, verbose=True)
     reg.fit(X, y)
     predicted = pd.DataFrame(reg.predict(test_data), columns=['SalePrice'])

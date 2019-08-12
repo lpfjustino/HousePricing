@@ -12,4 +12,5 @@ percent = (train.isnull().sum()/train.isnull().count()).sort_values(ascending=Fa
 # Computing how representative are the missing values
 missing_data = pd.concat([missing_count, percent], axis=1, keys=['Total', 'Percent'])
 features_missing_too_many = missing_data[missing_data['Percent'] > 0.85].index
+features_missing_any = missing_data[missing_data['Total'] > 0].index
 # print(features_missing_too_many)

@@ -1,15 +1,16 @@
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.impute import SimpleImputer
-from eda.stats import features_missing_too_many
+from eda.stats import features_missing_too_many, features_missing_any
 from resources import *
 from scipy.stats import skew
 
 def preprocess():
     drop_ids()
-    drop_missing()
-    fill_missing_numeric()
-    fill_missing_cathegoric()
-    fill_remaining()
+    # drop_missing()
+    drop_missing_v2()
+    # fill_missing_numeric()
+    # fill_missing_cathegoric()
+    # fill_remaining()
     stringify_meaningless_as_numeric()
 
     dummies = get_dummies()
@@ -75,8 +76,6 @@ def drop_missing():
     # Dropping features with too many missing values
     data.drop(features_missing_too_many, axis=1, inplace=True)
 
-
-
-
-
-
+def drop_missing_v2():
+    # Dropping features with too many missing values
+    data.drop(features_missing_any, axis=1, inplace=True)
