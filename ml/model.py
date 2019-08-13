@@ -1,6 +1,6 @@
 from sklearn.svm import SVR
 from resources import *
-from ml.preprocessing import preprocess, preprocess_v2
+from ml.preprocessing import preprocess, preprocess_v2, preprocess_v2_1
 
 from sklearn.model_selection import GridSearchCV
 
@@ -62,7 +62,7 @@ def model_v2_1():
 
 
 def model_v2_2():
-    data = preprocess()
+    data = preprocess_v2()
     train_n_rows = train.shape[0]
     train_df = data.iloc[:train_n_rows, 1:]
     test_data = data.iloc[train_n_rows:, 1:]
@@ -82,7 +82,7 @@ def model_v2_2():
 
 
 def model_v2_3():
-    data = preprocess_v2()
+    data = preprocess_v2_1()
     train_n_rows = train.shape[0]
     train_df = data.iloc[:train_n_rows, 1:]
     test_data = data.iloc[train_n_rows:, 1:]
@@ -93,8 +93,8 @@ def model_v2_3():
     X = train_data.iloc[:, :-1]
     y = train_data.iloc[:, -1]
 
-    parameters = {'kernel': ('linear', 'rbf', 'poly'), 'C': [0.01, 0.1, 0.2, 2], 'degree': [2, 3]}
-    svr = SVR(gamma='auto', max_iter=1000000)
+    parameters = {'kernel': ['poly'], 'C': [5, 8, 10], 'degree': [2]}
+    svr = SVR(gamma='auto', max_iter=-1, verbose=True)
     reg = GridSearchCV(svr, parameters, cv=5, verbose=True)
     reg.fit(X, y)
     predicted = pd.DataFrame(reg.predict(test_data), columns=['SalePrice'])

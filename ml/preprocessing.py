@@ -1,4 +1,3 @@
-from sklearn.preprocessing import MinMaxScaler
 from sklearn.impute import SimpleImputer
 from eda.stats import features_missing_too_many, features_missing_any
 from resources import *
@@ -16,45 +15,32 @@ def preprocess():
     dummies = get_dummies()
     transformed_data = log_transform_skewed_data()
     final_data = pd.concat([dummies, transformed_data], axis=1)
-    scaler = MinMaxScaler(copy=False)
-    scaler.fit(final_data)
-    scaler.transform(final_data)
 
     return final_data
 
 def preprocess_v2():
     drop_ids()
     drop_missing_v2()
+    fill_remaining()
     stringify_meaningless_as_numeric()
 
     dummies = get_dummies()
     transformed_data = log_transform_skewed_data()
     final_data = pd.concat([dummies, transformed_data], axis=1)
-    scaler = MinMaxScaler(copy=False)
-    scaler.fit(final_data)
-    scaler.transform(final_data)
 
     return final_data
 
 def preprocess_v2_1():
     drop_ids()
-    outliers = [30, 88, 462, 631, 1322]
-    drop_outliers(outliers)
     drop_missing_v2()
+    fill_remaining()
     stringify_meaningless_as_numeric()
 
     dummies = get_dummies()
     transformed_data = log_transform_skewed_data()
     final_data = pd.concat([dummies, transformed_data], axis=1)
-    scaler = MinMaxScaler(copy=False)
-    scaler.fit(final_data)
-    scaler.transform(final_data)
 
     return final_data
-
-
-def drop_outliers(outliers):
-    train.drop(train.index[outliers], inplace=True)
 
 
 def log_transform_skewed_data():
@@ -84,6 +70,7 @@ def stringify_meaningless_as_numeric():
 
 def drop_ids():
     train.drop("Id", axis=1, inplace=True)
+    data.drop("Id", axis=1, inplace=True)
 
 
 def fill_remaining():
@@ -111,5 +98,5 @@ def drop_missing():
     data.drop(features_missing_too_many, axis=1, inplace=True)
 
 def drop_missing_v2():
-    # Dropping features with too many missing values
+    # Dropping features with any missing values
     data.drop(features_missing_any, axis=1, inplace=True)
