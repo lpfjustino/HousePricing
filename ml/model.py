@@ -93,8 +93,14 @@ def model_v2_3():
     X = train_data.iloc[:, :-1]
     y = train_data.iloc[:, -1]
 
-    parameters = {'kernel': ['poly'], 'C': [5, 8, 10], 'degree': [2]}
-    svr = SVR(gamma='auto', max_iter=-1, verbose=True)
+    from sklearn.preprocessing.data import StandardScaler
+    scaler = StandardScaler()
+    X = scaler.fit_transform(X, y)
+    test_data = scaler.transform(test_data)
+    pd.DataFrame(X).to_csv(r'C:\Users\lpfjustino\Desktop\rola.csv', index=None, header=True)
+
+    parameters = {'kernel': ['poly'], 'C': [5, 7.5, 10, 100, 1000, 10000, 100000, 10000000], 'degree': [2]}
+    svr = SVR(gamma='auto', max_iter=100000)
     reg = GridSearchCV(svr, parameters, cv=5, verbose=True)
     reg.fit(X, y)
     predicted = pd.DataFrame(reg.predict(test_data), columns=['SalePrice'])
